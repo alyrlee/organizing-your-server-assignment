@@ -23,6 +23,15 @@ app.get('/', (req, res) => {
   res.send('Hello, world!')
 })
 
+function ignoreFavicon(req, res, next) {
+  if (req.originalUrl === '/favicon.ico') {
+    res.status(204).json({nope: true});
+  } else {
+    next();
+  }
+}
+
 app.use(errorHandler)
+app.use(ignoreFavicon);
 
 module.exports = app
